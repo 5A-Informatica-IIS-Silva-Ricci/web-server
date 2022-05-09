@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'dev.giuliopime'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("jakarta.ws.rs:jakarta.ws.rs-api:3.1.0")
+    implementation group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '3.1.0-M2'
+    implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '3.1.0-M2'
+    implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.1.0'
+    implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '3.1.0-M2'
+}
