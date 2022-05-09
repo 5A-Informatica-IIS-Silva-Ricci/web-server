@@ -8,7 +8,9 @@ import jakarta.ws.rs.core.Response;
 
 public class WsClient {
     public void start() {
-        String uri = "https://www.boredapi.com/api/activity";
+        String baseUrl = "https://api.genderize.io?name=";
+        String name = "Nadir";
+        String uri = baseUrl + name;
 
         Client client = ClientBuilder.newBuilder().build();
         WebTarget target = client.target(uri);

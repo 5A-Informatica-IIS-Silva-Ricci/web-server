@@ -2,33 +2,28 @@ package dev.giuliopime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Response {
-    private String activity;
-    private String type;
-    private String participants;
-    private String price;
-    private String link;
-    private String key;
-    private String accessibility;
+import java.util.Objects;
 
-    public Response(@JsonProperty("activity") String activity,
-                    @JsonProperty("type") String type,
-                    @JsonProperty("participants") String participants,
-                    @JsonProperty("price") String price,
-                    @JsonProperty("link") String link,
-                    @JsonProperty("key") String key,
-                    @JsonProperty("accessibility") String accessibility
+public class Response {
+    private String name;
+    private String gender;
+    private Double probability;
+
+    private String count;
+    public Response(@JsonProperty("name") String name,
+                    @JsonProperty("gender") String gender,
+                    @JsonProperty("probability") Double probability,
+                    @JsonProperty("count") String count
     ) {
-        this.activity = activity;
-        this.type = type;
-        this.participants = participants;
-        this.price = price;
-        this.link = link;
-        this.key = key;
-        this.accessibility = accessibility;
+        this.name = name;
+        if (Objects.equals(gender, "male"))
+            this.gender = "maschio";
+        else
+            this.gender = "femmina";
+        this.probability = probability;
     }
 
     public String toString() {
-        return "activity: " + activity + ", type: " + type;
+        return name + " è di solito " + gender + " (probabilità " + probability*100 + "%)";
     }
 }
