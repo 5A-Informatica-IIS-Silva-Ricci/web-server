@@ -3,16 +3,22 @@ plugins {
 }
 
 group 'dev.giuliopime'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // Servlet APIs per Java
+    compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+    // Librerie per richieste http
     implementation("jakarta.ws.rs:jakarta.ws.rs-api:3.1.0")
+    implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.1.0'
     implementation group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '3.1.0-M2'
     implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '3.1.0-M2'
-    implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.1.0'
+    // Libreria per deserializzare JSON in classi java e viceversa
     implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '3.1.0-M2'
+    // Libreria per leggere i valori dal file .env
+    compileOnly 'io.github.cdimascio:dotenv-java:2.2.3'
 }

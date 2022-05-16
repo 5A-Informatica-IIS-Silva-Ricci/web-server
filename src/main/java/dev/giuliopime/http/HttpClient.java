@@ -1,12 +1,18 @@
-package dev.giuliopime;
+package dev.giuliopime.http;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriBuilder;
 
-public class WsClient {
+public abstract class HttpClient {
+    protected UriBuilder uriBuilder = UriBuilder.newInstance();
+    protected String uri;
+    protected Client client = ClientBuilder.newBuilder().build();
+
+
     public void start() {
         String baseUrl = "https://api.genderize.io?name=";
         String name = "Nadir";
@@ -18,7 +24,7 @@ public class WsClient {
                 .request(MediaType.APPLICATION_JSON)
                 .buildGet()
                 .invoke();
-
-        System.out.println(response.readEntity(dev.giuliopime.Response.class).toString());
     }
+
+    protected abstract void setUri();
 }
