@@ -12,6 +12,11 @@ public abstract class HttpClient {
     protected String uri;
     protected Client client = ClientBuilder.newBuilder().build();
 
+    protected HttpClient() {
+        setUriBuilder();
+        setUri();
+    }
+
 
     public void start() {
         String baseUrl = "https://api.genderize.io?name=";
@@ -26,5 +31,6 @@ public abstract class HttpClient {
                 .invoke();
     }
 
+    protected abstract void setUriBuilder();
     protected abstract void setUri();
 }

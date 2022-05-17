@@ -13,7 +13,7 @@ public class WeatherClient extends HttpClient {
     }
 
     @Override
-    protected void setUri() {
+    protected void setUriBuilder() {
         this.uriBuilder
                 .host("")
                 .queryParam("api_key", Environment.GEOLOCATION_API_KEY);
