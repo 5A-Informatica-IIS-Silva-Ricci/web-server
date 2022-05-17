@@ -1,36 +1,43 @@
 package dev.giuliopime.http;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriBuilder;
 
 public abstract class HttpClient {
-    protected UriBuilder uriBuilder = UriBuilder.newInstance();
-    protected String uri;
     protected Client client = ClientBuilder.newBuilder().build();
+    protected UriBuilder uriBuilder = UriBuilder.newInstance();
+
+    protected ObjectMapper objectMapper = new ObjectMapper()
+            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            .enable(SerializationFeature.INDENT_OUTPUT);
 
     protected HttpClient() {
         setUriBuilder();
-        setUri();
     }
 
 
-    public void start() {
-        String baseUrl = "https://api.genderize.io?name=";
-        String name = "Nadir";
-        String uri = baseUrl + name;
+    protected <T> T get(String queryParam, String queryValue, Class<T> type) throws JsonProcessingException {
+        uriBuilder.queryParam(queryParam, queryValue);
 
-        Client client = ClientBuilder.newBuilder().build();
-        WebTarget target = client.target(uri);
-        Response response = target
+        WebTarget target = client.target(getUri());
+        String responseBody = target
                 .request(MediaType.APPLICATION_JSON)
                 .buildGet()
-                .invoke();
+                .invoke()
+                .readEntity(String.class);
+
+        return objectMapper.readValue(responseBody, type);
     }
 
     protected abstract void setUriBuilder();
-    protected abstract void setUri();
+    protected String getUri() {
+        return uriBuilder.build().toString();
+    }
 }
