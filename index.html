@@ -20,12 +20,12 @@
     <!-- Tailwind.css per la grafica -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Grafica custom -->
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- Logica frontend -->
     <script type="module">
         import {createApp} from 'https://unpkg.com/petite-vue?module'
-        import script from "./assets/script.js";
+        import script from "./assets/js/script.js";
 
         const geolocation = await script.getGeolocation()
         const {current_time} = geolocation.timezone
@@ -57,8 +57,8 @@
 </head>
 <body class="bg-white dark:bg-slate-900 text-black dark:text-white">
 
-<img src="./assets/light_background.png" class="w-100 -z-20 absolute dark:hidden">
-<img src="./assets/dark_background.png" class="w-100 -z-20 hidden absolute dark:block">
+<img src="./assets/img/light_background.png" class="w-100 -z-20 absolute dark:hidden">
+<img src="./assets/img/dark_background.png" class="w-100 -z-20 hidden absolute dark:block">
 
 <div v-scope class="z-40 w-100 h-screen p-8 flex justify-center items-center flex-col">
     <div class="flex justify-center items-center flex-col">
