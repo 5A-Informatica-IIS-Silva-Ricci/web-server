@@ -4,12 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.giuliopime.beans.GenderBean;
 import dev.giuliopime.http.HttpClient;
 
-public class GenderizeClient extends HttpClient {
-    public GenderizeClient() {
+public class GenderClient extends HttpClient {
+    public GenderClient() {
         super();
     }
 
-    protected GenderBean get(String nome) throws JsonProcessingException {
+    public GenderBean get(String nome) throws JsonProcessingException {
         return super.get("name", nome, GenderBean.class);
     }
 

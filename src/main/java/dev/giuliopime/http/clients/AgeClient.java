@@ -9,7 +9,7 @@ public class AgeClient extends HttpClient {
         super();
     }
 
-    protected AgeBean get(String nome) throws JsonProcessingException {
+    public AgeBean get(String nome) throws JsonProcessingException {
         return super.get("name", nome, AgeBean.class);
     }
 

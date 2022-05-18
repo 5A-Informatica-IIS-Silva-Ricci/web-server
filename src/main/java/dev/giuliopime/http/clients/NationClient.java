@@ -9,7 +9,7 @@ public class NationClient extends HttpClient {
         super();
     }
 
-    protected NationBean get(String nome) throws JsonProcessingException {
+    public NationBean get(String nome) throws JsonProcessingException {
         return super.get("name", nome, NationBean.class);
     }
 
