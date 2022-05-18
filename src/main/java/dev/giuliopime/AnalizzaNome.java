@@ -1,7 +1,6 @@
-package dev.giuliopime.servlet;
+package dev.giuliopime;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import dev.giuliopime.Environment;
 import dev.giuliopime.http.clients.AgeClient;
 import dev.giuliopime.http.clients.GenderClient;
 import dev.giuliopime.http.clients.NationClient;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ServletNome extends HttpServlet {
+public class AnalizzaNome extends HttpServlet {
     private static final String errorFile = Environment.ERROR_FILE;
     private static final String successFile = Environment.SUCCESS_FILE;
     @Override

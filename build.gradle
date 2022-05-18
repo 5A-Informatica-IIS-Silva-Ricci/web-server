@@ -11,14 +11,21 @@ repositories {
 
 dependencies {
     // Servlet APIs per Java
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
     // Librerie per richieste http
+    // https://mvnrepository.com/artifact/jakarta.ws.rs/jakarta.ws.rs-api
     implementation("jakarta.ws.rs:jakarta.ws.rs-api:3.1.0")
+    // https://mvnrepository.com/artifact/jakarta.activation/jakarta.activation-api
     implementation group: 'jakarta.activation', name: 'jakarta.activation-api', version: '2.1.0'
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.core/jersey-client
     implementation group: 'org.glassfish.jersey.core', name: 'jersey-client', version: '3.1.0-M2'
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.inject/jersey-hk2
     implementation group: 'org.glassfish.jersey.inject', name: 'jersey-hk2', version: '3.1.0-M2'
     // Libreria per deserializzare JSON in classi java e viceversa
+    // https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson
     implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '3.1.0-M2'
     // Libreria per leggere i valori dal file .env
+    // https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java
     compileOnly 'io.github.cdimascio:dotenv-java:2.2.3'
 }
