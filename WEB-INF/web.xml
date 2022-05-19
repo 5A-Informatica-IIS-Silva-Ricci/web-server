@@ -2,11 +2,11 @@
 <web-app>
     <servlet>
         <servlet-name>analizzaNome</servlet-name>
-        <servlet-class>AnalizzaNome</servlet-class>
+        <servlet-class>dev.giuliopime.AnalizzaNome</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>analizzaNome</servlet-name>
-        <url-pattern>/api/analizza</url-pattern>
+        <url-pattern>/analizza</url-pattern>
     </servlet-mapping>
 </web-app>

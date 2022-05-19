@@ -6,6 +6,13 @@ public class GenderBean extends Bean {
     private Double probability;
     private Integer count;
 
+    public String getGenderString() {
+        if(getGenderBoolean())
+            return "Maschio";
+        else
+            return "Femmina";
+    }
+
     public Boolean getGenderBoolean() {
         return gender.equalsIgnoreCase("male");
     }

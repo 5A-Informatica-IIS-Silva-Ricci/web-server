@@ -17,7 +17,7 @@ public abstract class HttpClient {
     /**
      * Il client che eseguirà le richieste http, utilizza Jersey
      */
-    protected Client client = ClientBuilder.newBuilder().build();
+    protected Client client = ClientBuilder.newClient();
     /**
      * Un builder per l'uri delle api
      */
