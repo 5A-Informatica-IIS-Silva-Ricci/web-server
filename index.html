@@ -28,7 +28,7 @@
         import script from "./assets/js/script.js";
 
         const geolocation = await script.getGeolocation()
-        const {current_time} = geolocation.timezone
+        const { current_time } = geolocation.timezone
 
         console.log("Geolocation data")
         console.log(geolocation)
@@ -36,20 +36,15 @@
         console.log("Tempo reale")
         console.log(current_time)
 
-        const currentTimeInt = parseInt(current_time.substring(0, 2))
-
-        let messaggioIntro;
-
-        if (currentTimeInt > 6 && currentTimeInt < 13)
-            messaggioIntro = "Buongiorno"
-        else if (currentTimeInt < 18)
-            messaggioIntro = "Buon pomeriggio"
-        else
-            messaggioIntro = "Buonasera"
+        const messaggioIntro = script.getMessaggioIntro(current_time)
 
         console.log("Messaggio intro")
         console.log(messaggioIntro)
 
+        /*
+        Crea l'app in vue-petite per poter usare variabili javascript all'interno dell'html atttraverso le
+        doppie parentesi graffe {{ variabile }}
+         */
         createApp({
             messaggioIntro: messaggioIntro
         }).mount()

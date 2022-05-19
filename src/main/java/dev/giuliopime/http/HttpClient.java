@@ -10,8 +10,6 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriBuilder;
 
-import java.util.concurrent.ExecutionException;
-
 public abstract class HttpClient {
     protected Client client = ClientBuilder.newBuilder().build();
     protected UriBuilder uriBuilder = UriBuilder.newInstance();
