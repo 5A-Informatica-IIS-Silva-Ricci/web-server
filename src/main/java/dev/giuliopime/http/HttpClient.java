@@ -4,20 +4,23 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import jakarta.ws.rs.client.Client;
-import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.UriBuilder;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import java.io.IOException;
 
 /**
  * Classe generica per la gestione di un client http
  */
 public abstract class HttpClient {
     /**
-     * Il client che eseguirà le richieste http, utilizza Jersey
+     * Il client che eseguirà le richieste http
      */
-    protected Client client = ClientBuilder.newClient();
+    OkHttpClient client = new OkHttpClient();
     /**
      * Un builder per l'uri delle api
      */
@@ -44,19 +47,18 @@ public abstract class HttpClient {
      * @return La classe indicata nel parametro type
      * @throws JsonProcessingException In caso la risposta delle api non coincida con la classe specificata
      */
-    protected <T> T get(String queryParam, String queryValue, Class<T> type) throws JsonProcessingException {
+    protected <T> T get(String queryParam, String queryValue, Class<T> type) throws IOException {
         uriBuilder.queryParam(queryParam, queryValue);
 
-        WebTarget target = client.target(getUri());
-        String responseBody = target
-                .request(MediaType.APPLICATION_JSON)
-                .buildGet()
-                .invoke()
-                // Prendo il contenuto del `data` della risposta
-                .readEntity(String.class);
+        Request request = new Request.Builder()
+                .url(getUri())
+                .build();
 
-        // Converto la stringa in class con l'objectMapper
-        return objectMapper.readValue(responseBody, type);
+        try (Response response = client.newCall(request).execute()) {
+            if (response.body() == null)
+                throw new IOException("Error processing request");
+            return objectMapper.readValue(response.body().string(), type);
+        }
     }
 
     /**

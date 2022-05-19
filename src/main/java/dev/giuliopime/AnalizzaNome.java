@@ -14,16 +14,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class AnalizzaNome extends HttpServlet {
-    private static String errorFile = Environment.ERROR_FILE;
-    private static String successFile = Environment.SUCCESS_FILE;
-
     @Override
-    public void init() throws ServletException {
-        super.init();
-        // Non servirebbe
-        Environment.getInstance();
-        errorFile = Environment.ERROR_FILE;
-        successFile = Environment.SUCCESS_FILE;
+    public void init() {
+        System.out.println("Inizializzata servlet per l'analisi dei nomi");
     }
 
     @Override
@@ -36,13 +29,13 @@ public class AnalizzaNome extends HttpServlet {
             String nome = req.getParameter("nome");
 
             if (nome == null)
-                req.getRequestDispatcher(errorFile).forward(req, resp);
+                req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
             else {
                 Thread r1 = new Thread(() ->
                 {
                     try {
                         req.setAttribute("ageBean", new AgeClient().get(nome));
-                    } catch (JsonProcessingException e) {
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -51,7 +44,7 @@ public class AnalizzaNome extends HttpServlet {
                 Thread r2 = new Thread(() -> {
                     try {
                         req.setAttribute("genderBean", new GenderClient().get(nome));
-                    } catch (JsonProcessingException e) {
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 });
@@ -59,7 +52,7 @@ public class AnalizzaNome extends HttpServlet {
                 Thread r3 = new Thread(() -> {
                     try {
                         req.setAttribute("countryBean", new NationClient().get(nome).getCountries().get(0));
-                    } catch (JsonProcessingException e) {
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
                 });
@@ -73,20 +66,20 @@ public class AnalizzaNome extends HttpServlet {
                         thread.join();
 
                         if (thread.getStackTrace().length > 0) {
-                            req.getRequestDispatcher(errorFile).forward(req, resp);
+                            req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
                             return;
                         }
                     }
 
-                    req.getRequestDispatcher(successFile)
+                    req.getRequestDispatcher(Environment.SUCCESS_FILE)
                             .forward(req, resp);
                 } catch (InterruptedException e) {
-                    req.getRequestDispatcher(errorFile).forward(req, resp);
+                    req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
                 }
             }
         } catch (Exception e) {
             try {
-                req.getRequestDispatcher(errorFile).forward(req, resp);
+                req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
             } catch (ServletException | IOException exception) {
                 System.out.println("Errore servlet");
                 System.out.println(exception);

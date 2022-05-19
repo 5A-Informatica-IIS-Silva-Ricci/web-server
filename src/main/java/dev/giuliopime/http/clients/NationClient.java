@@ -5,6 +5,8 @@ import dev.giuliopime.beans.AgeBean;
 import dev.giuliopime.beans.NationBean;
 import dev.giuliopime.http.HttpClient;
 
+import java.io.IOException;
+
 /**
  * Classe per la gestione delle richieste ad <a href="https://nationalize.io">api.nationalize.io</a>
  */
@@ -19,7 +21,7 @@ public class NationClient extends HttpClient {
      * @return {@link AgeBean} classe contenente le informazioni sulla nazione di una persona
      * @throws JsonProcessingException In caso si ottenga una risposta http non 200 dalle api
      */
-    public NationBean get(String nome) throws JsonProcessingException {
+    public NationBean get(String nome) throws IOException {
         return super.get("name", nome, NationBean.class);
     }
 

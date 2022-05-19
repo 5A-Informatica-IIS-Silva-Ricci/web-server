@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.giuliopime.beans.AgeBean;
 import dev.giuliopime.http.HttpClient;
 
+import java.io.IOException;
+
 /**
  * Classe per la gestione delle richieste ad <a href="https://agify.io">api.agify.io</a>
  */
@@ -18,7 +20,7 @@ public class AgeClient extends HttpClient {
      * @return {@link AgeBean} classe contenente le informazioni sull'età di una persona
      * @throws JsonProcessingException In caso si ottenga una risposta http non 200 dalle api
      */
-    public AgeBean get(String nome) throws JsonProcessingException {
+    public AgeBean get(String nome) throws IOException {
         return super.get("name", nome, AgeBean.class);
     }
 
