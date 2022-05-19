@@ -1,11 +1,9 @@
 package dev.giuliopime;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import dev.giuliopime.http.clients.AgeClient;
 import dev.giuliopime.http.clients.GenderClient;
 import dev.giuliopime.http.clients.NationClient;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,6 +19,7 @@ public class AnalizzaNome extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+        System.out.println("Richiesta GET: " + req.getRequestURI());
         processRequest(req, resp);
     }
 
@@ -28,14 +27,17 @@ public class AnalizzaNome extends HttpServlet {
         try {
             String nome = req.getParameter("nome");
 
-            if (nome == null)
-                req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
-            else {
+            if (nome == null) {
+                System.out.println("Parametro nome non trovato");
+                resp.sendRedirect(Environment.ERROR_FILE);
+            } else {
                 Thread r1 = new Thread(() ->
                 {
                     try {
-                        req.setAttribute("ageBean", new AgeClient().get(nome));
-                    } catch (IOException e) {
+                        AttributiCondivisi.getInstance().setEta(
+                                new AgeClient().get(nome).getAge()
+                        );
+                    } catch (UnknownError e) {
                         throw new RuntimeException(e);
                     }
                 }
@@ -43,16 +45,23 @@ public class AnalizzaNome extends HttpServlet {
 
                 Thread r2 = new Thread(() -> {
                     try {
-                        req.setAttribute("genderBean", new GenderClient().get(nome));
-                    } catch (IOException e) {
+                        AttributiCondivisi.getInstance().setGenere(
+                                new GenderClient().get(nome).getGenderString()
+                        );
+                    } catch (UnknownError e) {
                         throw new RuntimeException(e);
                     }
                 });
 
                 Thread r3 = new Thread(() -> {
                     try {
-                        req.setAttribute("countryBean", new NationClient().get(nome).getCountries().get(0));
-                    } catch (IOException e) {
+                        AttributiCondivisi.getInstance().setNazione(
+                                new NationClient().get(nome)
+                                        .getCountries()
+                                        .get(0)
+                                        .getCountry()
+                        );
+                    } catch (UnknownError e) {
                         throw new RuntimeException(e);
                     }
                 });
@@ -66,21 +75,29 @@ public class AnalizzaNome extends HttpServlet {
                         thread.join();
 
                         if (thread.getStackTrace().length > 0) {
-                            req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
+                            resp.sendRedirect(Environment.ERROR_FILE);
                             return;
                         }
                     }
 
+                    AttributiCondivisi attributiCondivisi = AttributiCondivisi.getInstance();
+
+                    req.setAttribute("eta", attributiCondivisi.getEta());
+                    req.setAttribute("nazione", attributiCondivisi.getNazione());
+                    req.setAttribute("genere", attributiCondivisi.getGenere());
+
                     req.getRequestDispatcher(Environment.SUCCESS_FILE)
                             .forward(req, resp);
                 } catch (InterruptedException e) {
-                    req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
+                    resp.sendRedirect(Environment.ERROR_FILE);
                 }
             }
         } catch (Exception e) {
             try {
-                req.getRequestDispatcher(Environment.ERROR_FILE).forward(req, resp);
-            } catch (ServletException | IOException exception) {
+                System.out.println("Errore nella servlet");
+                System.out.println(e);
+                resp.sendRedirect(Environment.ERROR_FILE);
+            } catch (IOException exception) {
                 System.out.println("Errore servlet");
                 System.out.println(exception);
             }

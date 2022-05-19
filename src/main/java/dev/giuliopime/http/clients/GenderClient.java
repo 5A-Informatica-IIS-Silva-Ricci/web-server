@@ -19,14 +19,14 @@ public class GenderClient extends HttpClient {
      * Richiede all'api il genere più probabile di una persona in base al suo nome
      * @param nome il nome della persona
      * @return {@link AgeBean} classe contenente le informazioni sul genere di una persona
-     * @throws JsonProcessingException In caso si ottenga una risposta http non 200 dalle api
+     * @throws UnknownError In caso si ottenga una risposta http non 200 dalle api
      */
-    public GenderBean get(String nome) throws IOException {
+    public GenderBean get(String nome) throws UnknownError {
         return super.get("name", nome, GenderBean.class);
     }
 
     @Override
-    protected void setUriBuilder() {
-        uriBuilder = uriBuilder.host("https://api.genderize.io");
+    protected void setUri() {
+        uri = "https://api.genderize.io";
     }
 }

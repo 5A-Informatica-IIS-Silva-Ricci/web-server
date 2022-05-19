@@ -2,6 +2,8 @@ package dev.giuliopime.beans;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Locale;
+
 public class CountryBean extends Bean{
     @JsonProperty("country_id")
     private String countryId;
@@ -13,6 +15,11 @@ public class CountryBean extends Bean{
 
     public String getCountryId() {
         return countryId;
+    }
+
+    public String getCountry() {
+        Locale loc = new Locale("it_IT", countryId);
+        return loc.getDisplayCountry(Locale.ITALIAN);
     }
 
     public void setCountryId(String countryId) {

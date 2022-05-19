@@ -19,14 +19,16 @@ public class NationClient extends HttpClient {
      * Richiede all'api la nazione più probabile di una persona in base al suo nome
      * @param nome il nome della persona
      * @return {@link AgeBean} classe contenente le informazioni sulla nazione di una persona
-     * @throws JsonProcessingException In caso si ottenga una risposta http non 200 dalle api
+     * @throws UnknownError In caso si ottenga una risposta http non 200 dalle api
      */
-    public NationBean get(String nome) throws IOException {
+    public NationBean get(String nome) throws UnknownError {
         return super.get("name", nome, NationBean.class);
     }
 
     @Override
-    protected void setUriBuilder() {
-        uriBuilder = uriBuilder.host("https://api.nationalize.io");
+    protected void setUri() {
+        uri = "https://api.nationalize.io";
     }
+
+
 }

@@ -13,9 +13,6 @@ dependencies {
     // Servlet APIs per Java
     // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    // Libreria per fare richieste http
-    // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.9.3'
     // Libreria per deserializzare JSON in classi java e viceversa
     // https://mvnrepository.com/artifact/org.glassfish.jersey.media/jersey-media-json-jackson
     implementation group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '3.1.0-M2'
