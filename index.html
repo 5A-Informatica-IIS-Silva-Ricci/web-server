@@ -27,6 +27,35 @@
         import { createApp, reactive } from 'https://unpkg.com/petite-vue?module'
         import script from "./assets/js/script.js";
 
+        /*
+        Crea l'app in petite-vue per poter usare variabili javascript all'interno dell'html atttraverso le
+        doppie parentesi graffe {{ variabile }}
+         */
+        const stato = reactive({
+            messaggioIntro: 'Buongiorno',
+            errore: false,
+            controllaErrore() {
+                this.errore = ((new URL(document.location)).searchParams.get("errore") !== null) || false
+                console.log("Errore")
+                console.log(this.errore)
+            },
+            rimuoviErrore() {
+                window.location.href = window.location.origin + window.location.pathname;
+                this.errore = false
+                console.log("Errore rimosso")
+            },
+            setMessaggioIntro(messaggio) {
+                this.messaggioIntro = messaggio
+            }
+        })
+
+        createApp({
+            stato,
+        }).mount()
+
+        stato.controllaErrore()
+
+
         const geolocation = await script.getGeolocation()
         const { current_time } = geolocation.timezone
 
@@ -38,33 +67,10 @@
 
         const messaggioIntro = script.getMessaggioIntro(current_time)
 
+        stato.setMessaggioIntro(messaggioIntro)
+
         console.log("Messaggio intro")
         console.log(messaggioIntro)
-
-        /*
-        Crea l'app in petite-vue per poter usare variabili javascript all'interno dell'html atttraverso le
-        doppie parentesi graffe {{ variabile }}
-         */
-        const stato = reactive({
-            messaggioIntro: messaggioIntro,
-            errore: false,
-            controllaErrore() {
-                this.errore = ((new URL(document.location)).searchParams.get("errore") !== null) || false
-                console.log("Errore")
-                console.log(this.errore)
-            },
-            rimuoviErrore() {
-                window.location.href = window.location.origin + window.location.pathname;
-                this.errore = false
-                console.log("Errore rimosso")
-            }
-        })
-
-        createApp({
-            stato,
-        }).mount()
-
-        stato.controllaErrore()
     </script>
 </head>
 <body class="bg-white dark:bg-slate-900 text-black dark:text-white">
@@ -73,9 +79,9 @@
 <img src="./assets/img/dark_background.png" class="w-100 -z-20 hidden absolute dark:block">
 
 <div v-scope class="z-30 w-100 h-screen p-8 flex justify-center items-center flex-col">
-    <div v-if="stato.errore" class="fixed backdrop-blur-xl w-screen h-screen z-40"></div>
+    <div id="alert-bg" v-if="stato.errore" class="fixed backdrop-blur-xl w-screen h-screen z-40"></div>
 
-    <div v-if="stato.errore" class="fixed z-50 inset-0 overflow-y-auto">
+    <div id="alert" v-if="stato.errore" class="fixed z-50 inset-0 overflow-y-auto">
         <div class="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
             <div class="relative bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full">
                 <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
