@@ -1,6 +1,6 @@
 package dev.giuliopime.beans;
 
-public class AgeBean extends Bean{
+public class AgeBean {
     private String name;
     private Integer age;
     private Integer count;

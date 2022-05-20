@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Locale;
 
-public class CountryBean extends Bean{
+public class CountryBean {
     @JsonProperty("country_id")
     private String countryId;
     private Double probability;

@@ -1,5 +1,8 @@
 package dev.giuliopime;
 
+/**
+ * Classe che gestisce delle variabili condivise tra thread attraverso il pattern Singleton
+ */
 public class AttributiCondivisi {
     private static AttributiCondivisi instance;
 

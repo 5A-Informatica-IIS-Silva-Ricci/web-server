@@ -1,6 +1,6 @@
 package dev.giuliopime.beans;
 
-public class GenderBean extends Bean {
+public class GenderBean {
     private String name;
     private String gender;
     private Double probability;

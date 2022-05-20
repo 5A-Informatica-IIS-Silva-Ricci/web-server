@@ -31,6 +31,7 @@ public class AnalizzaNome extends HttpServlet {
                 System.out.println("Parametro nome non trovato");
                 resp.sendRedirect(Environment.ERROR_FILE);
             } else {
+                // Avvio le tre richieste http in tre thread diversi per eseguirle in contemporanea
                 Thread r1 = new Thread(() ->
                 {
                     try {
@@ -71,6 +72,7 @@ public class AnalizzaNome extends HttpServlet {
                 threads.forEach(Thread::start);
 
                 try {
+                    // Aspetto che tutti e tre i thread finiscano di eseguire le richieste
                     for (Thread thread : threads) {
                         thread.join();
 

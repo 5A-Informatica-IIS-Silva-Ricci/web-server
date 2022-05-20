@@ -3,7 +3,7 @@ package dev.giuliopime.beans;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.ArrayList;
-public class NationBean extends Bean {
+public class NationBean {
     private String name;
     @JsonProperty("country")
     private ArrayList<CountryBean> countries;
