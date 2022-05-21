@@ -46,7 +46,7 @@
         </div>
         <div class="ring-2 ring-sky-500 min-w-[15rem] py-8 m-8 flex justify-center items-center flex-col g-white shadow-sm rounded-lg text-slate-400 dark:bg-slate-800 dark:text-slate-300 dark:highlight-white/5">
             <h3 class="font-extrabold text-xl mb-4">
-                Eta
+                Età
             </h3>
             <span class="text-center">
                 ${eta}
